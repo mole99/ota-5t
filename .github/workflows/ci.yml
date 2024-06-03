@@ -1,0 +1,78 @@
+name: CI
+
+# Variables
+env:
+  PDK_FAMILY: "sky130"
+  OPEN_PDKS_REV: "4d5af10bfee4dab799566aaf903bb22aee69bac9"
+  CACE_ROOT: "."
+  CACE_DATASHEET: "cace/ota-5t.yaml"
+  CACE_SOURCE: "schematic" # best
+
+# Events that trigger workflow
+on:
+  # Runs on all pushes to branches
+  push:
+  # Runs on all PRs
+  pull_request:
+  # Runs every day at midnight UTC
+  schedule:
+    - cron: "0 0 * * *"
+  # Manual Dispatch
+  workflow_dispatch:
+
+jobs:
+  run-cace:
+    runs-on: ubuntu-22.04
+    name: Run CACE
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+      # Enable the PDK
+      - name: Install volare
+        run: |
+          python3 -m pip install volare
+      - name: Cache ${{ env.PDK_FAMILY }} PDK
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}
+          key: cache-${{ env.PDK_FAMILY }}-pdk-${{ env.OPEN_PDKS_REV }}
+      - name: Enable ${{ env.PDK_FAMILY }} PDK
+        run: |
+          volare enable --pdk ${{ env.PDK_FAMILY }} --pdk-root ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }} ${{ env.OPEN_PDKS_REV }}
+          echo "PDK_ROOT=${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}" >> $GITHUB_ENV
+      # Install Nix
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      # Setup the binary cache
+      - name: Setup cache
+        uses: cachix/cachix-action@v14
+        with:
+          name: openlane
+          extraPullNames: openlane
+      # Use devShell from CACE
+      - uses: rrbutani/use-nix-shell-action@v1
+        with:
+          devShell: github:efabless/cace
+      # Run CACE
+      - name: Run CACE
+        run: |
+          # Run CACE inside CACE_ROOT
+          cd ${{ github.workspace }}
+          cd ${{ env.CACE_ROOT }}
+          echo $PWD
+          magic --version
+          xschem --version
+          cace ${{ env.CACE_DATASHEET }} --source ${{ env.CACE_SOURCE }} --summary summary.md --parallel_parameters 1 --sequential
+      # Upload artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: |
+            ${{ env.CACE_ROOT }}/plots/
+      # Add summary
+      - name: Adding markdown
+        run: cat summary.md >> $GITHUB_STEP_SUMMARY
