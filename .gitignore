@@ -1,0 +1,4 @@
+cace/*.spice
+cace/*.sym
+netlist/
+ngspice/*.spice

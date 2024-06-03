@@ -1,0 +1,175 @@
+#--------------------------------------------------------------
+# CACE circuit characterization file
+#--------------------------------------------------------------
+
+name: ota-5t
+description: A simple 5 transistor OTA
+commit: n/a
+PDK: sky130A
+
+cace_format: 5.0
+
+authorship:
+  designer: Leo Moser
+  company: Efabless
+  creation_date: May 27, 2024
+  license: Apache 2.0
+
+paths:
+  root: ..
+  documentation: doc
+  schematic: xschem
+  layout: gds
+  netlist: netlist
+  testbench: cace
+  simulation: ngspice
+  plots: plots
+  logs: ngspice/log
+  reports: reports
+
+pins:
+  VDD:
+    direction: inout
+  VSS:
+    direction: inout
+  Ib:
+    direction: input
+  Vp:
+    direction: input
+  Vn:
+    direction: input
+  Vout:
+    direction: output
+
+default_conditions:
+  corner:
+    description: TODO
+    display: Vcm
+    typical: tt
+    unit: V
+
+electrical_parameters:
+  A0:
+    description: DC gain
+    display: A0
+    unit: V/V
+    spec:
+      minimum:
+        value: '3'
+        fail: true
+      typical:
+        value: any
+      maximum:
+        value: any
+    simulate:
+      ngspice:
+        template: ota-5t_tb.spice
+        format: ascii
+        suffix: .data
+        variables:
+        - result
+        - 'null'
+        - 'null'
+    conditions:
+      vdd:
+        typical: '1.8'
+      vcm:
+        typical: '0.9'
+      corner:
+        enumerate:
+        - tt
+        - ff
+        - ss
+  UGF:
+    description: Unity Gain Frequency
+    display: UGF
+    unit: Hz
+    spec:
+      minimum:
+        value: '10000'
+        fail: true
+      typical:
+        value: any
+      maximum:
+        value: any
+    simulate:
+      ngspice:
+        template: ota-5t_tb.spice
+        format: ascii
+        suffix: .data
+        variables:
+        - 'null'
+        - result
+        - 'null'
+    conditions:
+      vdd:
+        typical: '1.8'
+      vcm:
+        typical: '0.9'
+      corner:
+        enumerate:
+        - tt
+        - ff
+        - ss
+  PM:
+    description: Phase Margin
+    display: PM
+    unit: °
+    spec:
+      minimum:
+        value: '60'
+        fail: true
+      typical:
+        value: any
+      maximum:
+        value: any
+    simulate:
+      ngspice:
+        template: ota-5t_tb.spice
+        format: ascii
+        suffix: .data
+        variables:
+        - 'null'
+        - 'null'
+        - result
+    conditions:
+      vdd:
+        typical: '1.8'
+      vcm:
+        typical: '0.9'
+      corner:
+        enumerate:
+        - tt
+        - ff
+        - ss
+
+physical_parameters:
+  area:
+    status: skip
+    description: Total circuit layout area
+    display: area
+    unit: µm²
+    spec:
+      maximum:
+        value: '100'
+        fail: true
+    evaluate: cace_area
+  LVS_errors:
+    description: LVS errors
+    display: LVS errors
+    spec:
+      maximum:
+        value: '0'
+        fail: true
+    evaluate:
+      cace_lvs:
+        script: run_project_lvs.tcl
+  DRC_errors:
+    status: skip
+    description: DRC errors
+    display: DRC errors
+    spec:
+      maximum:
+        value: '0'
+        fail: true
+    evaluate: cace_drc
