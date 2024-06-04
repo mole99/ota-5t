@@ -4,15 +4,15 @@ description: 'Composite action to run a CACE design'
 inputs:
   pdk_family:
     description: 'e.g. sky130'
-    required: true
+    required: false
     default: 'sky130'
   open_pdks_rev:
     description: 'PDK hash'
-    required: true
+    required: false
     default: '4d5af10bfee4dab799566aaf903bb22aee69bac9'
   cace_root:
     description: 'working directory'
-    required: true
+    required: false
     default: '.'
   cace_datasheet:
     description: 'path to the datasheet relative to cace_root'

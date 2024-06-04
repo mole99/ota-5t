@@ -37,9 +37,12 @@ jobs:
           cace_datasheet: "cace/ota-5t.yaml"
           cace_source: "schematic" # best
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Echo
-        run: echo done!
-        # Upload artifacts
+      - name: Test
+        run: |
+          echo $PWD
+          magic --version
+          xschem --version
+      # Upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
