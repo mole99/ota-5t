@@ -29,7 +29,7 @@ jobs:
           cace_root: '.'
           cace_datasheet: 'cace/ota-5t.yaml'
           cace_source: 'schematic'
-          cace_args: '--summary summary.md --sequential'
+          cace_args: '--summary summary.md --sequential --parallel_parameters 1'
           token: ${{ secrets.GITHUB_TOKEN }}
       # Upload artifacts
       - name: Upload artifacts
