@@ -1,0 +1,50 @@
+name: CI
+
+# Variables
+env:
+  PDK_FAMILY: "sky130"
+  OPEN_PDKS_REV: "4d5af10bfee4dab799566aaf903bb22aee69bac9"
+  CACE_ROOT: "."
+  CACE_DATASHEET: "cace/ota-5t.yaml"
+  CACE_SOURCE: "schematic" # best
+
+# Events that trigger workflow
+on:
+  # Runs on all pushes to branches
+  push:
+  # Runs on all PRs
+  pull_request:
+  # Runs every day at midnight UTC
+  schedule:
+    - cron: "0 0 * * *"
+  # Manual Dispatch
+  workflow_dispatch:
+
+jobs:
+  run-cace:
+    runs-on: ubuntu-22.04
+    name: Run CACE
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+      # Enable the PDK
+      - name: Run CACE
+        uses: ./.github/actions/cace
+        with:
+          pdk-family: "sky130"
+          open_pdks_rev: "4d5af10bfee4dab799566aaf903bb22aee69bac9"
+          cace_root: "."
+          cace_datasheet: "cace/ota-5t.yaml"
+          cace_source: "schematic" # best
+      - name: Echo
+        run: echo done!
+        # Upload artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: |
+            ${{ env.CACE_ROOT }}/plots/
+      # Add summary
+      - name: Add Markdown to Step Summary
+        run: cat summary.md >> $GITHUB_STEP_SUMMARY

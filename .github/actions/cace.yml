@@ -1,0 +1,71 @@
+name: 'CACE'
+description: 'Composite action to run a CACE design'
+
+inputs:
+  pdk-family:
+    description: 'e.g. sky130'
+    required: true
+    default: 'sky130'
+  open_pdks_rev:
+    description: 'PDK hash'
+    required: true
+    default: '4d5af10bfee4dab799566aaf903bb22aee69bac9'
+  cace_root:
+    description: 'working directory'
+    required: true
+    default: '.'
+  cace_datasheet:
+    description: 'path to the datasheet relative to cace_root'
+    required: false
+    default: ''
+  cace_source:
+    description: 'source for the netlist [schematic, layout, rcx, all, best]'
+    required: false
+    default: 'best'
+
+runs:
+  using: "composite"
+  steps:
+    # Enable the PDK
+    - name: Install volare
+      shell: bash
+      run: |
+        python3 -m pip install volare
+    - name: Cache ${{ env.PDK_FAMILY }} PDK
+      uses: actions/cache@v3
+      with:
+        path: ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}
+        key: cache-${{ env.PDK_FAMILY }}-pdk-${{ env.OPEN_PDKS_REV }}
+    - name: Enable ${{ env.PDK_FAMILY }} PDK
+      shell: bash
+      run: |
+        volare enable --pdk ${{ env.PDK_FAMILY }} --pdk-root ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }} ${{ env.OPEN_PDKS_REV }}
+        echo "PDK_ROOT=${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}" >> $GITHUB_ENV
+    # Install Nix
+    - name: Install Nix
+      uses: cachix/install-nix-action@v27
+      with:
+        extra_nix_config: |
+          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+    # Setup the binary cache
+    - name: Setup cache
+      uses: cachix/cachix-action@v14
+      with:
+        name: openlane
+        extraPullNames: openlane
+    # Use devShell from CACE
+    - name: Use devShell
+      uses: rrbutani/use-nix-shell-action@v1
+      with:
+        devShell: github:efabless/cace
+    # Run CACE
+    - name: Run CACE
+      shell: bash
+      run: |
+        # Run CACE inside CACE_ROOT
+        cd ${{ github.workspace }}
+        cd ${{ env.CACE_ROOT }}
+        echo $PWD
+        magic --version
+        xschem --version
+        cace ${{ env.CACE_DATASHEET }} --source ${{ env.CACE_SOURCE }} --summary summary.md --parallel_parameters 1 --sequential
