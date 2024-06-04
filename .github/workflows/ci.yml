@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       # Run CACE on the design
       - name: Setup Environment and Run CACE
-        uses: efabless/cace-action@latest
+        uses: efabless/cace-action
         with:
           pdk_family: 'sky130'
           open_pdks_rev: '4d5af10bfee4dab799566aaf903bb22aee69bac9'
