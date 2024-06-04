@@ -36,8 +36,6 @@ jobs:
           cace_root: "."
           cace_datasheet: "cace/ota-5t.yaml"
           cace_source: "schematic" # best
-        secrets:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo
         run: echo done!
         # Upload artifacts

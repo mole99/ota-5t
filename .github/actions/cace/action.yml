@@ -22,7 +22,9 @@ inputs:
     description: 'source for the netlist [schematic, layout, rcx, all, best]'
     required: false
     default: 'best'
-
+  token:
+    description: 'A Github PAT'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -46,7 +48,7 @@ runs:
       uses: cachix/install-nix-action@v27
       with:
         extra_nix_config: |
-          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          access-tokens = github.com=${{ inputs.token }}
     # Setup the binary cache
     - name: Setup cache
       uses: cachix/cachix-action@v14
