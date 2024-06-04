@@ -31,16 +31,16 @@ runs:
       shell: bash
       run: |
         python3 -m pip install volare
-    - name: Cache ${{ env.PDK_FAMILY }} PDK
+    - name: Cache ${{ inputs.pdk_family }} PDK
       uses: actions/cache@v3
       with:
-        path: ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}
-        key: cache-${{ env.PDK_FAMILY }}-pdk-${{ env.OPEN_PDKS_REV }}
-    - name: Enable ${{ env.PDK_FAMILY }} PDK
+        path: ${{ github.workspace }}/.volare-${{ inputs.pdk_family }}
+        key: cache-${{ inputs.pdk_family }}-pdk-${{ inputs.open_pdks_rev }}
+    - name: Enable ${{ inputs.pdk_family }} PDK
       shell: bash
       run: |
-        volare enable --pdk ${{ env.PDK_FAMILY }} --pdk-root ${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }} ${{ env.OPEN_PDKS_REV }}
-        echo "PDK_ROOT=${{ github.workspace }}/.volare-${{ env.PDK_FAMILY }}" >> $GITHUB_ENV
+        volare enable --pdk ${{ inputs.pdk_family }} --pdk-root ${{ github.workspace }}/.volare-${{ inputs.pdk_family }} ${{ inputs.open_pdks_rev }}
+        echo "PDK_ROOT=${{ github.workspace }}/.volare-${{ inputs.pdk_family }}" >> $GITHUB_ENV
     # Install Nix
     - name: Install Nix
       uses: cachix/install-nix-action@v27
@@ -64,8 +64,8 @@ runs:
       run: |
         # Run CACE inside CACE_ROOT
         cd ${{ github.workspace }}
-        cd ${{ env.CACE_ROOT }}
+        cd ${{ inputs.cace_root }}
         echo $PWD
         magic --version
         xschem --version
-        cace ${{ env.CACE_DATASHEET }} --source ${{ env.CACE_SOURCE }} --summary summary.md --parallel_parameters 1 --sequential
+        cace ${{ inputs.cace_datasheet }} --source ${{ inputs.cace_source }} --summary summary.md --parallel_parameters 1 --sequential
