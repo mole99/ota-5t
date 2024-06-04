@@ -32,12 +32,12 @@ jobs:
           cace_args: '--summary summary.md --sequential --parallel_parameters 1'
           token: ${{ secrets.GITHUB_TOKEN }}
       # Upload artifacts
-      - name: Upload artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: artifact
           path: |
-            ${{ env.CACE_ROOT }}/plots/
+            ${{ github.workspace }}/plots/
       # Add summary
       - name: Add Markdown to Step Summary
         run: cat summary.md >> $GITHUB_STEP_SUMMARY
