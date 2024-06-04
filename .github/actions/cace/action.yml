@@ -10,6 +10,10 @@ inputs:
     description: 'PDK hash'
     required: false
     default: '4d5af10bfee4dab799566aaf903bb22aee69bac9'
+  cace_rev:
+    description: 'CACE commit hash'
+    required: false
+    default: '4cad2ba2789973ebe99f27536004a3e50ea34814'
   cace_root:
     description: 'working directory'
     required: false
@@ -59,7 +63,7 @@ runs:
     - name: Use devShell
       uses: rrbutani/use-nix-shell-action@v1
       with:
-        devShell: github:efabless/cace@4cad2ba2789973ebe99f27536004a3e50ea34814
+        devShell: github:efabless/cace/${{ inputs.cace_rev }}
     # Run CACE
     - name: Run CACE
       shell: bash
