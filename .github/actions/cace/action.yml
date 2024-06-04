@@ -59,7 +59,7 @@ runs:
     - name: Use devShell
       uses: rrbutani/use-nix-shell-action@v1
       with:
-        devShell: github:efabless/cace
+        devShell: github:efabless/cace@4cad2ba2789973ebe99f27536004a3e50ea34814
     # Run CACE
     - name: Run CACE
       shell: bash
