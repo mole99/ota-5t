@@ -31,7 +31,7 @@ jobs:
       - name: Run CACE
         uses: ./.github/actions/cace
         with:
-          pdk-family: "sky130"
+          pdk_family: "sky130"
           open_pdks_rev: "4d5af10bfee4dab799566aaf903bb22aee69bac9"
           cace_root: "."
           cace_datasheet: "cace/ota-5t.yaml"

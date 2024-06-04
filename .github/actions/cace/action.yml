@@ -2,7 +2,7 @@ name: 'CACE'
 description: 'Composite action to run a CACE design'
 
 inputs:
-  pdk-family:
+  pdk_family:
     description: 'e.g. sky130'
     required: true
     default: 'sky130'
