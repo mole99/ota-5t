@@ -76,7 +76,7 @@ C {devices/code_shown.sym} 660 110 0 0 {name=SETUP
 simulator=ngspice
 only_toplevel=false
 value="
-.lib /home/leo/.volare/sky130A/libs.tech/combined/sky130.lib.spice \{corner\}
+.lib \{PDK_ROOT\}/\{PDK\}/libs.tech/combined/sky130.lib.spice \{corner\}
 
 .include \{DUT_path\}
 "}

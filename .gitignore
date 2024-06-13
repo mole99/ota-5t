@@ -3,3 +3,5 @@ cace/*.sym
 netlist/
 ngspice/*.spice
 runs/*
+cace/templates/*.spice
+cace/templates/*.sym
