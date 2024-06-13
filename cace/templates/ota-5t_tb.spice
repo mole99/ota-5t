@@ -1,0 +1,41 @@
+** sch_path: /home/leo/Nextcloud/Efabless/FSiC/ota-5t/cace/templates/ota-5t_tb.sch
+**.subckt ota-5t_tb
+I0 VDD Ib 10u
+C1 Vout GND 1p m=1
+V0 VSS GND 0
+V2 VDD GND {vdd}
+E1 Vp net2 net1 GND 0.5
+E2 Vn net2 net1 GND -0.5
+Vdm net1 GND ac 1
+Vcm net2 GND {vcm}
+x1 Vp Vn Vout VDD VSS Ib ota-5t
+**** begin user architecture code
+
+
+.lib /home/leo/.volare/sky130A/libs.tech/combined/sky130.lib.spice {corner}
+
+.include {DUT_path}
+
+
+
+
+.control
+    * run ac simulation
+    ac dec 20 1k 100e6
+
+    * measure parameters
+    let vout_mag = abs(v(Vout))
+    let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
+    meas ac A0 find vout_mag at=1k
+    meas ac UGF when vout_mag=1 fall=1
+    meas ac PM find vout_phase_margin when vout_mag=1
+
+    echo $&A0 $&ugf $&PM > {simpath}/{filename}_{N}.data
+    quit
+.endc
+
+
+**** end user architecture code
+**.ends
+.GLOBAL GND
+.end

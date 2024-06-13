@@ -17,15 +17,10 @@ authorship:
 
 paths:
   root: ..
-  documentation: doc
   schematic: xschem
   layout: gds
   netlist: netlist
-  testbench: cace
-  simulation: ngspice
-  plots: plots
-  logs: ngspice/log
-  reports: reports
+  documentation: doc
 
 pins:
   VDD:
@@ -66,20 +61,15 @@ electrical_parameters:
         template: ota-5t_tb.spice
         format: ascii
         suffix: .data
-        variables:
-        - result
-        - 'null'
-        - 'null'
+        variables: [result, 'null', 'null']
     conditions:
       vdd:
         typical: '1.8'
       vcm:
         typical: '0.9'
       corner:
-        enumerate:
-        - tt
-        - ff
-        - ss
+        enumerate: [tt, ff, ss]
+
   UGF:
     description: Unity Gain Frequency
     display: UGF
@@ -97,20 +87,15 @@ electrical_parameters:
         template: ota-5t_tb.spice
         format: ascii
         suffix: .data
-        variables:
-        - 'null'
-        - result
-        - 'null'
+        variables: ['null', result, 'null']
     conditions:
       vdd:
         typical: '1.8'
       vcm:
         typical: '0.9'
       corner:
-        enumerate:
-        - tt
-        - ff
-        - ss
+        enumerate: [tt, ff, ss]
+
   PM:
     description: Phase Margin
     display: PM
@@ -128,20 +113,14 @@ electrical_parameters:
         template: ota-5t_tb.spice
         format: ascii
         suffix: .data
-        variables:
-        - 'null'
-        - 'null'
-        - result
+        variables: ['null', 'null', result]
     conditions:
       vdd:
         typical: '1.8'
       vcm:
         typical: '0.9'
       corner:
-        enumerate:
-        - tt
-        - ff
-        - ss
+        enumerate: [tt, ff, ss]
 
 physical_parameters:
   area:

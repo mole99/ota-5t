@@ -1,4 +1,4 @@
-v {xschem version=3.4.4 file_version=1.2
+v {xschem version=3.4.5 file_version=1.2
 }
 G {}
 K {}
@@ -72,29 +72,13 @@ C {devices/gnd.sym} 560 210 0 0 {name=l2 lab=GND}
 C {devices/lab_wire.sym} 390 90 0 0 {name=p3 sig_type=std_logic lab=Vp}
 C {devices/lab_wire.sym} 390 170 0 0 {name=p4 sig_type=std_logic lab=Vn}
 C {devices/lab_wire.sym} 390 130 0 0 {name=p7 sig_type=std_logic lab=Ib}
-C {devices/code_shown.sym} 660 120 0 0 {name=COMMANDS
+C {devices/code_shown.sym} 660 110 0 0 {name=SETUP
 simulator=ngspice
 only_toplevel=false
 value="
-
-.lib \{PDK_ROOT\}/\{PDK\}/libs.tech/combined/sky130.lib.spice \{corner\}
+.lib /home/leo/.volare/sky130A/libs.tech/combined/sky130.lib.spice \{corner\}
 
 .include \{DUT_path\}
-
-.control
-    * run ac simulation
-    ac dec 20 1k 100e6
-
-    * measure parameters
-    let vout_mag = abs(v(Vout))
-    let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
-    meas ac A0 find vout_mag at=1k
-    meas ac UGF when vout_mag=1 fall=1
-    meas ac PM find vout_phase_margin when vout_mag=1
-
-    echo $&A0 $&ugf $&PM > \{simpath\}/\{filename\}_\{N\}.data
-    quit
-.endc
 "}
 C {devices/lab_wire.sym} 560 130 0 1 {name=p11 sig_type=std_logic lab=Vout}
 C {devices/vsource.sym} 50 140 0 0 {name=V0 value=0 savecurrent=false}
@@ -115,3 +99,22 @@ C {devices/lab_wire.sym} 130 70 0 0 {name=p5 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 210 70 0 0 {name=p6 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 450 190 2 1 {name=p9 sig_type=std_logic lab=VSS}
 C {ota-5t.sym} 460 130 0 0 {name=x1}
+C {devices/code_shown.sym} 660 280 0 0 {name=CONTROL
+simulator=ngspice
+only_toplevel=false
+value="
+.control
+    * run ac simulation
+    ac dec 20 1k 100e6
+
+    * measure parameters
+    let vout_mag = abs(v(Vout))
+    let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
+    meas ac A0 find vout_mag at=1k
+    meas ac UGF when vout_mag=1 fall=1
+    meas ac PM find vout_phase_margin when vout_mag=1
+
+    echo $&A0 $&ugf $&PM > \{simpath\}/\{filename\}_\{N\}.data
+    quit
+.endc
+"}
