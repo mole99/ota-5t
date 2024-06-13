@@ -24,12 +24,9 @@ jobs:
         uses: efabless/cace-action@main
         with:
           pdk_family: 'sky130'
-          open_pdks_rev: '4d5af10bfee4dab799566aaf903bb22aee69bac9'
-          cace_rev: '4cad2ba2789973ebe99f27536004a3e50ea34814'
           cace_root: '.'
           cace_datasheet: 'cace/ota-5t.yaml'
           cace_source: 'schematic'
-          cace_args: '--summary summary.md --sequential --parallel_parameters 1'
           token: ${{ secrets.GITHUB_TOKEN }}
       # Upload artifacts
       - name: Upload Artifacts
@@ -37,7 +34,7 @@ jobs:
         with:
           name: artifact
           path: |
-            ${{ github.workspace }}/plots/
+            ${{ github.workspace }}/runs/
       # Add summary
       - name: Add Markdown to Step Summary
-        run: cat summary.md >> $GITHUB_STEP_SUMMARY
+        run: cat runs/*/summary.md >> $GITHUB_STEP_SUMMARY
