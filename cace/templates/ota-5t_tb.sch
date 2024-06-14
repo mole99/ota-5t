@@ -61,24 +61,26 @@ N 190 410 230 410 {
 lab=GND}
 N 190 370 230 370 {
 lab=#net1}
-C {devices/isource.sym} 210 140 0 0 {name=I0 value=10u}
+C {devices/isource.sym} 210 140 0 0 {name=I0 value=\{ib\}}
 C {devices/lab_wire.sym} 450 70 0 0 {name=p2 sig_type=std_logic lab=VDD}
 C {devices/capa.sym} 560 180 0 0 {name=C1
 m=1
-value=1p
+value=\{cl\}
 footprint=1206
 device="ceramic capacitor"}
 C {devices/gnd.sym} 560 210 0 0 {name=l2 lab=GND}
 C {devices/lab_wire.sym} 390 90 0 0 {name=p3 sig_type=std_logic lab=Vp}
 C {devices/lab_wire.sym} 390 170 0 0 {name=p4 sig_type=std_logic lab=Vn}
 C {devices/lab_wire.sym} 390 130 0 0 {name=p7 sig_type=std_logic lab=Ib}
-C {devices/code_shown.sym} 660 110 0 0 {name=SETUP
+C {devices/code_shown.sym} 660 90 0 0 {name=SETUP
 simulator=ngspice
 only_toplevel=false
 value="
 .lib \{PDK_ROOT\}/\{PDK\}/libs.tech/combined/sky130.lib.spice \{corner\}
 
 .include \{DUT_path\}
+
+.temp \{temperature\}
 "}
 C {devices/lab_wire.sym} 560 130 0 1 {name=p11 sig_type=std_logic lab=Vout}
 C {devices/vsource.sym} 50 140 0 0 {name=V0 value=0 savecurrent=false}
@@ -99,7 +101,7 @@ C {devices/lab_wire.sym} 130 70 0 0 {name=p5 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 210 70 0 0 {name=p6 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 450 190 2 1 {name=p9 sig_type=std_logic lab=VSS}
 C {ota-5t.sym} 460 130 0 0 {name=x1}
-C {devices/code_shown.sym} 660 280 0 0 {name=CONTROL
+C {devices/code_shown.sym} 660 300 0 0 {name=CONTROL
 simulator=ngspice
 only_toplevel=false
 value="

@@ -6,8 +6,8 @@ V {}
 S {}
 E {}
 B 2 60 660 860 1060 {flags=graph
-y1=-24
-y2=18
+y1=-19
+y2=22
 ypos1=0
 ypos2=2
 divy=5
@@ -118,7 +118,7 @@ C {devices/gnd.sym} 560 210 0 0 {name=l2 lab=GND}
 C {devices/lab_wire.sym} 390 90 0 0 {name=p3 sig_type=std_logic lab=Vp}
 C {devices/lab_wire.sym} 390 170 0 0 {name=p4 sig_type=std_logic lab=Vn}
 C {devices/lab_wire.sym} 390 130 0 0 {name=p7 sig_type=std_logic lab=Ib}
-C {devices/code_shown.sym} 660 120 0 0 {name=COMMANDS
+C {devices/code_shown.sym} 960 310 0 0 {name=COMMANDS
 simulator=ngspice
 only_toplevel=false
 value="
@@ -128,6 +128,20 @@ value="
 .control
 
     save all
+
+    save @m.x1.xm1.msky130_fd_pr__pfet_01v8[id] @m.x1.xm1.msky130_fd_pr__pfet_01v8[gm] @m.x1.xm1.msky130_fd_pr__pfet_01v8[gds]
+    save @m.x1.xm2.msky130_fd_pr__pfet_01v8[id] @m.x1.xm2.msky130_fd_pr__pfet_01v8[gm] @m.x1.xm2.msky130_fd_pr__pfet_01v8[gds]
+
+    save @m.x1.xm3.msky130_fd_pr__nfet_01v8[id] @m.x1.xm3.msky130_fd_pr__nfet_01v8[gm] @m.x1.xm3.msky130_fd_pr__nfet_01v8[gds]
+    save @m.x1.xm4.msky130_fd_pr__nfet_01v8[id] @m.x1.xm4.msky130_fd_pr__nfet_01v8[gm] @m.x1.xm4.msky130_fd_pr__nfet_01v8[gds]
+    save @m.x1.xm5.msky130_fd_pr__nfet_01v8[id] @m.x1.xm5.msky130_fd_pr__nfet_01v8[gm] @m.x1.xm5.msky130_fd_pr__nfet_01v8[gds]
+    save @m.x1.xm6.msky130_fd_pr__nfet_01v8[id] @m.x1.xm6.msky130_fd_pr__nfet_01v8[gm] @m.x1.xm6.msky130_fd_pr__nfet_01v8[gds]
+
+    * operating point
+    op
+
+    write ota-5t_tb.raw
+    set appendwrite
 
     * run ac simulation
     ac dec 20 1k 100e6
@@ -140,16 +154,13 @@ value="
     meas ac PM find vout_phase_margin when vout_mag=1
 
     write ota-5t_tb.raw
-    *echo $&ugf > \{simpath\}/\{filename\}_\{N\}.data
-    *quit
-
 .endc
 "}
-C {devices/launcher.sym} 730 570 0 0 {name=h26
+C {devices/launcher.sym} 460 550 0 0 {name=h26
 descr="Annotate OP" 
 tclcommand="set show_hidden_texts 1; xschem annotate_op"
 }
-C {devices/launcher.sym} 730 620 0 0 {name=h27
+C {devices/launcher.sym} 460 610 0 0 {name=h27
 descr="Load waves AC" 
 tclcommand="
 xschem raw_read $netlist_dir/[file tail [file rootname [xschem get current_name]]].raw ac
@@ -175,4 +186,4 @@ C {devices/lab_wire.sym} 310 280 0 0 {name=p13 sig_type=std_logic lab=Vn}
 C {devices/lab_wire.sym} 130 70 0 0 {name=p5 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 210 70 0 0 {name=p6 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 450 190 2 1 {name=p9 sig_type=std_logic lab=VSS}
-C {sky130_fd_pr/corner.sym} 440 370 0 0 {name=CORNER only_toplevel=false corner=tt}
+C {sky130_fd_pr/corner.sym} 790 130 0 0 {name=CORNER only_toplevel=false corner=tt}
