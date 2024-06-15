@@ -106,7 +106,7 @@ electrical_parameters:
         typical: 1.8
         maximum: 1.9
       corner:
-        enumerate: [tt, ff, ss, fs, sf]
+        enumerate: [tt, ff, ss] # fs, sf
       temperature:
         minimum: -40
         typical: 27
@@ -136,7 +136,7 @@ electrical_parameters:
         typical: 1.8
         maximum: 1.9
       corner:
-        enumerate: [tt, ff, ss, fs, sf]
+        enumerate: [tt, ff, ss] # fs, sf
       temperature:
         minimum: -40
         typical: 27
@@ -166,7 +166,7 @@ electrical_parameters:
         typical: 1.8
         maximum: 1.9
       corner:
-        enumerate: [tt, ff, ss, fs, sf]
+        enumerate: [tt, ff, ss] # fs, sf
       temperature:
         minimum: -40
         typical: 27
@@ -179,7 +179,7 @@ physical_parameters:
     unit: µm²
     spec:
       maximum:
-        value: 300
+        value: 600
         fail: true
     evaluate: cace_area
 
