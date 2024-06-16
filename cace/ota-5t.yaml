@@ -88,7 +88,7 @@ electrical_parameters:
     unit: V/V
     spec:
       minimum:
-        value: 30
+        value: 50
         fail: true
       typical:
         value: any
