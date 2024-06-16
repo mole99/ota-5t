@@ -1,7 +1,5 @@
-cace/*.spice
-cace/*.sym
 netlist/
-ngspice/*.spice
+xschem/sim/
 runs/*
 cace/templates/*.spice
 cace/templates/*.sym
