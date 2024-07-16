@@ -117,6 +117,5 @@ value="
     meas ac PM find vout_phase_margin when vout_mag=1
 
     echo $&A0 $&ugf $&PM > \{simpath\}/\{filename\}_\{N\}.data
-    quit
 .endc
 "}

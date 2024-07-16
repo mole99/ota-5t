@@ -1,10 +1,7 @@
 # Source the PDK xschemrc file
-source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+if {![info exists PDK]} {
+    source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+}
 
-# Set the netlist directory
-set netlist_dir [file dirname [info script]]/sim
-
-### Add local directories to library ###
-
-# Add current directory
+# Add current directory to xschem library path
 append XSCHEM_LIBRARY_PATH :[file dirname [info script]]
