@@ -81,6 +81,11 @@ value="
 .include \{DUT_path\}
 
 .temp \{temperature\}
+
+.option SEED=[\{seed=12345\} + \{iterations=0\}]
+
+* Flag unsafe operating conditions (exceeds models' specified limits)
+.option warn=1
 "}
 C {devices/lab_wire.sym} 560 130 0 1 {name=p11 sig_type=std_logic lab=Vout}
 C {devices/vsource.sym} 50 140 0 0 {name=V0 value=0 savecurrent=false}
@@ -101,7 +106,7 @@ C {devices/lab_wire.sym} 130 70 0 0 {name=p5 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 210 70 0 0 {name=p6 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 450 190 2 1 {name=p9 sig_type=std_logic lab=VSS}
 C {ota-5t.sym} 460 130 0 0 {name=x1}
-C {devices/code_shown.sym} 660 300 0 0 {name=CONTROL
+C {devices/code_shown.sym} 660 340 0 0 {name=CONTROL
 simulator=ngspice
 only_toplevel=false
 value="
@@ -117,6 +122,5 @@ value="
     meas ac PM find vout_phase_margin when vout_mag=1
 
     echo $&A0 $&ugf $&PM > \{simpath\}/\{filename\}_\{N\}.data
-    quit
 .endc
 "}

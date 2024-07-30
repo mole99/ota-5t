@@ -4,7 +4,6 @@
 
 name:           ota-5t
 description:    A simple 5-transistor OTA
-commit:         n/a
 PDK:            sky130A
 
 cace_format:    5.0
@@ -81,30 +80,30 @@ default_conditions:
     unit: °C
     typical: 27
 
-electrical_parameters:
-  A0:
+parameters:
+  a0:
     description: DC gain
-    display: A0
+    display: DC gain
     unit: V/V
     spec:
       minimum:
         value: 50
-        fail: true
       typical:
         value: any
       maximum:
         value: any
-    simulate:
+    tool:
       ngspice:
-        template: ota-5t_tb.spice
+        template: ac.sch
         format: ascii
         suffix: .data
-        variables: [result, 'null', 'null']
+        variables: [result, null, null]
+    plot:
+      type: xyplot
+      filename: gain.png
+      xaxis: temperature
+      yaxis: result
     conditions:
-      vdd:
-        minimum: 1.7
-        typical: 1.8
-        maximum: 1.9
       corner:
         enumerate: [tt, ff, ss] # fs, sf
       temperature:
@@ -112,29 +111,64 @@ electrical_parameters:
         typical: 27
         maximum: 130
 
-  UGF:
+  a0_mc:
+    description: DC gain Monte Carlo
+    display: DC gain MC
+    unit: V/V
+    spec:
+      minimum:
+        value: 50
+      typical:
+        value: any
+      maximum:
+        value: any
+    tool:
+      ngspice:
+        template: ac.sch
+        # Merge runs with the same conditions
+        # but different iterations
+        # This is used for plotting
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [result, null, null]
+    plot:
+      type: histogram
+      filename: gain_mc.png
+      xaxis: result
+    conditions:
+      iterations:
+        description: Iterations to run
+        display: Iterations
+        minimum: 1
+        maximum: 100
+        step: linear
+        stepsize: 1
+      corner:
+        typical: mc
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 130
+
+  ugf:
     description: Unity Gain Frequency
-    display: UGF
+    display: Unity Gain Frequency
     unit: Hz
     spec:
       minimum:
         value: 1e6
-        fail: true
       typical:
         value: any
       maximum:
         value: any
-    simulate:
+    tool:
       ngspice:
-        template: ota-5t_tb.spice
+        template: ac.sch
         format: ascii
         suffix: .data
-        variables: ['null', result, 'null']
+        variables: [null, result, null]
     conditions:
-      vdd:
-        minimum: 1.7
-        typical: 1.8
-        maximum: 1.9
       corner:
         enumerate: [tt, ff, ss] # fs, sf
       temperature:
@@ -142,29 +176,24 @@ electrical_parameters:
         typical: 27
         maximum: 130
 
-  PM:
+  pm:
     description: Phase Margin
-    display: PM
+    display: Phase Margin
     unit: °
     spec:
       minimum:
         value: 60
-        fail: true
       typical:
         value: any
       maximum:
         value: any
-    simulate:
+    tool:
       ngspice:
-        template: ota-5t_tb.spice
+        template: ac.sch
         format: ascii
         suffix: .data
-        variables: ['null', 'null', result]
+        variables: [null, null, result]
     conditions:
-      vdd:
-        minimum: 1.7
-        typical: 1.8
-        maximum: 1.9
       corner:
         enumerate: [tt, ff, ss] # fs, sf
       temperature:
@@ -172,7 +201,48 @@ electrical_parameters:
         typical: 27
         maximum: 130
 
-physical_parameters:
+  transient_response:
+    description: Large signal transient response
+    display: Large signal transient response
+    status: skip
+    unit: mV
+    tool:
+      ngspice:
+        template: transient.sch
+        format: ascii
+        suffix: .data
+        variables:
+        - time
+        - result
+        - Vinp
+    plot:
+      filename: transient.svg
+      xaxis: time
+      yaxis: result
+    variables:
+      time:
+        display: Time
+        unit: ms
+      Vinp:
+        display: Vinp
+        unit: V
+      result:
+        display: Vout
+        unit: V
+    conditions:
+      Tmax:
+        display: Simulation time
+        unit: ns
+        typical: 500
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 130
+      corner:
+        minimum: ss
+        typical: tt
+        maximum: ff
+
   area:
     description: Total circuit layout area
     display: Area
@@ -180,25 +250,74 @@ physical_parameters:
     spec:
       maximum:
         value: 600
-        fail: true
-    evaluate: cace_area
+    tool:
+      magic_area
 
-  LVS_errors:
-    description: LVS errors
-    display: LVS errors
+  width:
+    description: Total circuit layout width
+    display: Width
+    unit: µm
+    spec:
+      maximum:
+        value: any
+    tool:
+      magic_width
+
+  height:
+    description: Total circuit layout height
+    display: Height
+    unit: µm
+    spec:
+      maximum:
+        value: any
+    tool:
+      magic_height
+
+  magic_drc:
+    description: Magic DRC
+    display: Magic DRC
     spec:
       maximum:
         value: 0
-        fail: true
-    evaluate:
-      cace_lvs:
+    tool:
+      magic_drc
+
+  netgen_lvs:
+    description: Netgen LVS
+    display: Netgen LVS
+    spec:
+      maximum:
+        value: 0
+    tool:
+      netgen_lvs:
         script: run_project_lvs.tcl
 
-  DRC_errors:
-    description: DRC errors
-    display: DRC errors
+  klayout_drc_feol:
+    description: KLayout DRC feol
+    display: KLayout DRC feol
     spec:
       maximum:
         value: 0
-        fail: true
-    evaluate: cace_drc
+    tool:
+        klayout_drc:
+            args: ['-rd', 'feol=true']
+
+  klayout_drc_beol:
+    description: KLayout DRC beol
+    display: KLayout DRC beol
+    spec:
+      maximum:
+        value: 0
+    tool:
+        klayout_drc:
+            args: ['-rd', 'beol=true']
+
+  klayout_drc_full:
+    description: KLayout DRC full
+    display: KLayout DRC full
+    spec:
+      maximum:
+        value: 0
+    tool:
+        klayout_drc:
+            args: ['-rd', 'feol=true', '-rd', 'beol=true', '-rd', 'offgrid=true']

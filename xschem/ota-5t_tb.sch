@@ -111,9 +111,7 @@ C {devices/isource.sym} 210 140 0 0 {name=I0 value=10u}
 C {devices/lab_wire.sym} 450 70 0 0 {name=p2 sig_type=std_logic lab=VDD}
 C {devices/capa.sym} 560 180 0 0 {name=C1
 m=1
-value=1p
-footprint=1206
-device="ceramic capacitor"}
+value=1p}
 C {devices/gnd.sym} 560 210 0 0 {name=l2 lab=GND}
 C {devices/lab_wire.sym} 390 90 0 0 {name=p3 sig_type=std_logic lab=Vp}
 C {devices/lab_wire.sym} 390 170 0 0 {name=p4 sig_type=std_logic lab=Vn}
