@@ -87,7 +87,7 @@ parameters:
     unit: V/V
     spec:
       minimum:
-        value: 150
+        value: 50
       typical:
         value: any
       maximum:
