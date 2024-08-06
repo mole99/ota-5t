@@ -24,12 +24,6 @@ This will use the "best" netlist available. Since a layout is provided, the netl
 
 After characterization is completed, you will find the simulation files, log files and reports under `run/TIMESTAMP/`, where TIMESTAMP is the time and date when cace was started.
 
-You can also start CACE in GUI mode, simply run:
-
-```console
-cace-gui
-```
-
 # Continuous Integration
 
 This project also demonstrates how CACE can be used for continuous integration. Under `.github/workflows/` you will find the `ci.yml` GitHub action. It makes use of the composite action [cace-action](https://github.com/efabless/cace-action).
