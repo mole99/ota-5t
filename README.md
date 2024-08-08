@@ -2,6 +2,8 @@
 
 This example showcases how to setup a project for [CACE](https://github.com/efabless/cace).
 
+[Design Documentation](docs/ota-5t.md)
+
 # Repository Structure
 
 Besides the normal directories such as `xschem/` for the schematic and testbench and `gds/` for the layout, there is also the `cace/` subdirectory.

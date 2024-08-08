@@ -19,7 +19,7 @@ paths:
   schematic:        xschem
   layout:           gds
   netlist:          netlist
-  documentation:    doc
+  documentation:    docs
 
 pins:
   VDD:
