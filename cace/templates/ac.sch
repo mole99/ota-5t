@@ -61,11 +61,11 @@ N 190 410 230 410 {
 lab=GND}
 N 190 370 230 370 {
 lab=#net1}
-C {devices/isource.sym} 210 140 0 0 {name=I0 value=\{ib\}}
+C {devices/isource.sym} 210 140 0 0 {name=I0 value=CACE\{ib\}}
 C {devices/lab_wire.sym} 450 70 0 0 {name=p2 sig_type=std_logic lab=VDD}
 C {devices/capa.sym} 560 180 0 0 {name=C1
 m=1
-value=\{cl\}
+value=CACE\{cl\}
 footprint=1206
 device="ceramic capacitor"}
 C {devices/gnd.sym} 560 210 0 0 {name=l2 lab=GND}
@@ -76,13 +76,13 @@ C {devices/code_shown.sym} 660 90 0 0 {name=SETUP
 simulator=ngspice
 only_toplevel=false
 value="
-.lib \{PDK_ROOT\}/\{PDK\}/libs.tech/combined/sky130.lib.spice \{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/combined/sky130.lib.spice CACE\{corner\}
 
-.include \{DUT_path\}
+.include CACE\{DUT_path\}
 
-.temp \{temperature\}
+.temp CACE\{temperature\}
 
-.option SEED=[\{seed=12345\} + \{iterations=0\}]
+.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 
 * Flag unsafe operating conditions (exceeds models' specified limits)
 .option warn=1
@@ -90,13 +90,13 @@ value="
 C {devices/lab_wire.sym} 560 130 0 1 {name=p11 sig_type=std_logic lab=Vout}
 C {devices/vsource.sym} 50 140 0 0 {name=V0 value=0 savecurrent=false}
 C {devices/gnd.sym} 50 210 0 0 {name=l3 lab=GND}
-C {devices/vsource.sym} 130 140 0 0 {name=V2 value=\{vdd\} savecurrent=false}
+C {devices/vsource.sym} 130 140 0 0 {name=V2 value=CACE\{vdd\} savecurrent=false}
 C {devices/lab_wire.sym} 50 70 0 0 {name=p1 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 210 210 2 0 {name=p8 sig_type=std_logic lab=Ib}
 C {devices/vcvs.sym} 150 390 0 1 {name=E1 value=0.5}
 C {devices/vcvs.sym} 310 390 0 0 {name=E2 value=-0.5}
 C {devices/vsource.sym} 50 510 0 0 {name=Vdm value="ac 1" savecurrent=false}
-C {devices/vsource.sym} 230 510 0 0 {name=Vcm value=\{vcm\} savecurrent=false}
+C {devices/vsource.sym} 230 510 0 0 {name=Vcm value=CACE\{vcm\} savecurrent=false}
 C {devices/gnd.sym} 50 560 0 0 {name=l5 lab=GND}
 C {devices/gnd.sym} 230 560 0 0 {name=l6 lab=GND}
 C {devices/gnd.sym} 230 430 0 0 {name=l7 lab=GND}
@@ -121,6 +121,6 @@ value="
     meas ac UGF when vout_mag=1 fall=1
     meas ac PM find vout_phase_margin when vout_mag=1
 
-    echo $&A0 $&ugf $&PM > \{simpath\}/\{filename\}_\{N\}.data
+    echo $&A0 $&ugf $&PM > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}

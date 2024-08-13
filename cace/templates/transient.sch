@@ -54,16 +54,16 @@ lab=GND}
 C {devices/code_shown.sym} 880 320 0 0 {name=CONTROL only_toplevel=false value="
 .control
     * Step function applied at time 100ns, save transient data
-    tran 10n \{Tmax\}
+    tran 10n CACE\{Tmax\}
     set wr_singlescale
-    wrdata \{simpath\}/\{filename\}_\{N\}.data V(Vout) V(Vp)
+    wrdata CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data V(Vout) V(Vp)
 .endc
 "}
-C {devices/isource.sym} 220 130 0 0 {name=I0 value=\{ib\}}
+C {devices/isource.sym} 220 130 0 0 {name=I0 value=CACE\{ib\}}
 C {devices/lab_wire.sym} 600 60 0 0 {name=p4 sig_type=std_logic lab=VDD}
 C {devices/capa.sym} 790 170 0 0 {name=C1
 m=1
-value=\{cl\}
+value=CACE\{cl\}
 footprint=1206
 device="ceramic capacitor"}
 C {devices/gnd.sym} 790 200 0 0 {name=l2 lab=GND}
@@ -73,7 +73,7 @@ C {devices/lab_wire.sym} 540 120 0 0 {name=p7 sig_type=std_logic lab=Ib}
 C {devices/lab_wire.sym} 790 120 0 1 {name=p8 sig_type=std_logic lab=Vout}
 C {devices/vsource.sym} 60 130 0 0 {name=V0 value=0 savecurrent=false}
 C {devices/gnd.sym} 60 200 0 0 {name=l3 lab=GND}
-C {devices/vsource.sym} 140 130 0 0 {name=V2 value=\{vdd\} savecurrent=false}
+C {devices/vsource.sym} 140 130 0 0 {name=V2 value=CACE\{vdd\} savecurrent=false}
 C {devices/lab_wire.sym} 60 60 0 0 {name=p9 sig_type=std_logic lab=VSS}
 C {devices/lab_wire.sym} 220 200 2 0 {name=p10 sig_type=std_logic lab=Ib}
 C {devices/lab_wire.sym} 140 60 0 0 {name=p12 sig_type=std_logic lab=VDD}
@@ -81,7 +81,7 @@ C {devices/lab_wire.sym} 220 60 0 0 {name=p13 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 600 180 2 1 {name=p14 sig_type=std_logic lab=VSS}
 C {ota-5t.sym} 610 120 0 0 {name=x2}
 C {devices/vcvs.sym} 690 310 0 1 {name=Evdrv1 value=1}
-C {devices/vsource.sym} 300 130 0 0 {name=V3 value="DC 0 PWL(0 0 100n 0 100.1n \{vdd\})" savecurrent=false}
+C {devices/vsource.sym} 300 130 0 0 {name=V3 value="DC 0 PWL(0 0 100n 0 100.1n CACE\{vdd\})" savecurrent=false}
 C {devices/gnd.sym} 710 440 0 0 {name=l4 lab=GND}
 C {devices/lab_wire.sym} 300 60 0 0 {name=p15 sig_type=std_logic lab=Vp}
 C {devices/gnd.sym} 300 200 0 0 {name=l5 lab=GND}
@@ -89,13 +89,13 @@ C {devices/code_shown.sym} 880 60 0 0 {name=SETUP
 simulator=ngspice
 only_toplevel=false
 value="
-.lib \{PDK_ROOT\}/\{PDK\}/libs.tech/combined/sky130.lib.spice \{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/combined/sky130.lib.spice CACE\{corner\}
 
-.include \{DUT_path\}
+.include CACE\{DUT_path\}
 
-.temp \{temperature\}
+.temp CACE\{temperature\}
 
-.option SEED=[\{seed=12345\} + \{iterations=0\}]
+.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 
 * Flag unsafe operating conditions (exceeds models' specified limits)
 .option warn=1

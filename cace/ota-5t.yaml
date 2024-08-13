@@ -6,7 +6,7 @@ name:           ota-5t
 description:    A simple 5-transistor OTA
 PDK:            sky130A
 
-cace_format:    5.0
+cace_format:    5.1
 
 authorship:
   designer:         Leo Moser
