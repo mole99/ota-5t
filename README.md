@@ -1,4 +1,4 @@
-# A simple 5-transistor OTA
+# A simple 5-transistor OTA ![](../../workflows/cace/badge.svg)
 
 This example showcases how to setup a project for [CACE](https://github.com/efabless/cace).
 

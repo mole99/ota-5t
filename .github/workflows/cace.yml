@@ -1,4 +1,4 @@
-name: CI
+name: cace
 
 # Events that trigger workflow
 on:
