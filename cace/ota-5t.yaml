@@ -82,6 +82,7 @@ default_conditions:
 
 parameters:
   dc_params:
+    display: DC Params
     spec:
       a0:
         display: DC gain

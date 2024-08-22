@@ -2,7 +2,8 @@
 
 This example showcases how to setup a project for [CACE](https://github.com/efabless/cace).
 
-[Design Documentation](docs/ota-5t.md)
+- [Documentation](docs/ota-5t.md)
+- [Characterization](docs/ota-5t_rcx.md)
 
 # Repository Structure
 
