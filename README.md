@@ -29,10 +29,8 @@ After characterization is completed, you will find the simulation files, log fil
 
 # Continuous Integration
 
-This project also demonstrates how CACE can be used for continuous integration. Under `.github/workflows/` you will find the `ci.yml` GitHub action. It makes use of the composite action [cace-action](https://github.com/efabless/cace-action).
+This project also demonstrates how CACE can be used for continuous integration. Under `.github/workflows/` you will find the `cace.yml` GitHub action. It makes use of the composite action [cace-action](https://github.com/efabless/cace-action).
 
 First, the environment is set up and CACE is started. Then the `run/` directory is uploaded so that it can be viewed later. Finally, the summary is added to the step overview.
 
 Take a look at the latest runs under [actions](https://github.com/mole99/ota-5t/actions). If you are logged in to GitHub, you can also click on a run and view the summary.
-
-
